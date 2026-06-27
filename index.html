@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zentryx Interactive — Mobile Software Studio</title>
+  <meta name="description" content="Zentryx Interactive LLC is an independent mobile software studio based in Vermont. We build focused, high-quality applications powered by AI." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Zentryx Interactive — Mobile Software Studio" />
+  <meta property="og:description" content="Zentryx Interactive LLC is an independent mobile software studio based in Vermont. We build focused, high-quality applications powered by AI." />
+  <meta property="og:url" content="https://zentryxinteractive.com" />
+  <meta property="og:image" content="assets/zentryx_logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Zentryx Interactive — Mobile Software Studio" />
+  <meta name="twitter:description" content="Zentryx Interactive LLC is an independent mobile software studio based in Vermont. We build focused, high-quality applications powered by AI." />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ──────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:           #0A0A0F;
+      --surface:      #111118;
+      --border:       #1E1E2E;
+      --text:         #F0F0F5;
+      --muted:        #6B6B80;
+      --accent:       #00B4B4;
+      --accent-hover: #00D4D4;
+      --nav-height:   68px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Layout Utilities ──────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .section-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 48px;
+    }
+
+    /* ── Navigation ────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      transition: border-bottom 0.2s ease, background-color 0.2s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav.scrolled {
+      background-color: rgba(10, 10, 15, 0.92);
+      border-bottom-color: var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    /* Logo */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 28px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-logo img.hidden {
+      display: none;
+    }
+
+    .nav-logo-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    /* Desktop links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.15s ease;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* Hamburger */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background-color: var(--muted);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-hamburger.open span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+    .nav-hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-hamburger.open span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+    /* Mobile dropdown */
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      background-color: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 32px;
+      flex-direction: column;
+      gap: 0;
+      z-index: 99;
+    }
+
+    .nav-mobile.open {
+      display: flex;
+    }
+
+    .nav-mobile a {
+      display: block;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--muted);
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.15s ease;
+    }
+
+    .nav-mobile a:last-child {
+      border-bottom: none;
+    }
+
+    .nav-mobile a:hover {
+      color: var(--text);
+    }
+
+    /* ── Hero ──────────────────────────────────────────────── */
+    .hero {
+      padding-top: calc(var(--nav-height) + 120px);
+      padding-bottom: 140px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+
+    .hero-headline {
+      font-size: clamp(38px, 6vw, 68px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    /* ── Divider ───────────────────────────────────────────── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Products Section ──────────────────────────────────── */
+    .products {
+      padding: 120px 0;
+    }
+
+    .product-card {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      padding: 40px 44px;
+      max-width: 780px;
+    }
+
+    .product-eyebrow {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .product-name {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+
+    .product-tagline {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .product-description {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .product-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .product-footer a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      transition: color 0.15s ease;
+    }
+
+    .product-footer a:hover {
+      color: var(--accent-hover);
+    }
+
+    .product-footer-note {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    /* ── About Section ─────────────────────────────────────── */
+    .about {
+      padding: 120px 0;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+      margin-bottom: 72px;
+    }
+
+    .about-headline {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      color: var(--text);
+    }
+
+    .about-body {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .about-stats {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.01em;
+    }
+
+    .stat-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      display: inline-block;
+      margin: 0 20px;
+      vertical-align: middle;
+    }
+
+    /* ── Contact Section ───────────────────────────────────── */
+    .contact {
+      padding: 120px 0;
+      text-align: center;
+    }
+
+    .contact-intro {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .contact-email {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+      transition: color 0.15s ease;
+    }
+
+    .contact-email:hover {
+      color: var(--accent-hover);
+    }
+
+    /* ── Footer ────────────────────────────────────────────── */
+    .footer {
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── Responsive ────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-hamburger {
+        display: flex;
+      }
+
+      .hero {
+        padding-top: calc(var(--nav-height) + 80px);
+        padding-bottom: 100px;
+      }
+
+      .hero-sub {
+        font-size: 16px;
+      }
+
+      .products {
+        padding: 80px 0;
+      }
+
+      .product-card {
+        padding: 28px 24px;
+      }
+
+      .about {
+        padding: 80px 0;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin-bottom: 52px;
+      }
+
+      .about-stats {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .stat-dot {
+        display: none;
+      }
+
+      .contact {
+        padding: 80px 0;
+      }
+
+      .contact-email {
+        font-size: 17px;
+      }
+
+      .section-label {
+        margin-bottom: 36px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-headline {
+        letter-spacing: -0.02em;
+      }
+
+      .product-name {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ─────────────────────────────────────────── -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo" aria-label="Zentryx Interactive home">
+          <img
+            src="assets/logo.svg"
+            alt="Zentryx Interactive"
+            id="nav-logo-img"
+            onerror="this.classList.add('hidden')"
+          />
+          <span class="nav-logo-text">Zentryx Interactive</span>
+        </a>
+
+        <ul class="nav-links" role="list">
+          <li><a href="#products">Products</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <button
+          class="nav-hamburger"
+          id="hamburger"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile nav dropdown -->
+  <div class="nav-mobile" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
+    <a href="#products" class="mobile-link">Products</a>
+    <a href="#about" class="mobile-link">About</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+  </div>
+
+  <main>
+
+    <!-- ── Hero ───────────────────────────────────────────────── -->
+    <section class="hero" aria-label="Hero">
+      <div class="container">
+        <span class="hero-eyebrow">Mobile Software Studio</span>
+        <h1 class="hero-headline">We build software people<br>actually use.</h1>
+        <p class="hero-sub">
+          Zentryx Interactive is an independent studio based in Vermont.
+          We create focused, AI-powered mobile applications that solve real problems.
+        </p>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── Products ───────────────────────────────────────────── -->
+    <section class="products" id="products" aria-label="Our work">
+      <div class="container">
+        <span class="section-label">Our Work</span>
+
+        <article class="product-card" aria-label="Furavis AI">
+          <span class="product-eyebrow">Flagship Product</span>
+          <h2 class="product-name">Furavis AI</h2>
+          <p class="product-tagline">Your Pet's Health Companion</p>
+          <p class="product-description">
+            An AI-powered mobile health companion for pet owners. Furavis AI combines veterinary
+            knowledge with artificial intelligence to help owners monitor their pet's health, detect
+            problems early, and make better care decisions.
+          </p>
+          <div class="product-tags" aria-label="Product tags">
+            <span class="tag">Android</span>
+            <span class="tag">AI-Powered</span>
+            <span class="tag">Health &amp; Wellness</span>
+            <span class="tag">Subscription</span>
+          </div>
+          <div class="product-footer">
+            <a
+              href="https://zentryxinteractive.github.io/furavisai/privacy-policy.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Privacy Policy
+            </a>
+            <span class="product-footer-note">Coming to Google Play</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── About ──────────────────────────────────────────────── -->
+    <section class="about" id="about" aria-label="About Zentryx Interactive">
+      <div class="container">
+        <span class="section-label">About</span>
+
+        <div class="about-grid">
+          <div>
+            <h2 class="about-headline">Built in Vermont.</h2>
+          </div>
+          <div>
+            <p class="about-body">
+              Zentryx Interactive LLC is an independent mobile software studio founded in Vermont.
+              We focus on building thoughtful, AI-powered applications with a small team and high
+              standards. Our products are built to last — designed for real users, not demos.
+            </p>
+          </div>
+        </div>
+
+        <div class="about-stats" aria-label="Company facts">
+          <span class="stat-item">Founded 2024</span>
+          <span class="stat-dot" aria-hidden="true"></span>
+          <span class="stat-item">Vermont, USA</span>
+          <span class="stat-dot" aria-hidden="true"></span>
+          <span class="stat-item">Independent</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── Contact ────────────────────────────────────────────── -->
+    <section class="contact" id="contact" aria-label="Contact">
+      <div class="container">
+        <span class="section-label">Contact</span>
+        <p class="contact-intro">For press, partnerships, and acquisition inquiries:</p>
+        <a class="contact-email" href="mailto:support@zentryxinteractive.io">
+          support@zentryxinteractive.io
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────── -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2026 Zentryx Interactive LLC &middot; Vermont, USA</p>
+    </div>
+  </footer>
+
+  <!-- ── Minimal JS ─────────────────────────────────────────── -->
+  <script>
+    (function () {
+      var nav       = document.getElementById('nav');
+      var hamburger = document.getElementById('hamburger');
+      var mobileNav = document.getElementById('mobile-nav');
+      var mobileLinks = document.querySelectorAll('.mobile-link');
+
+      // Scroll: add .scrolled class to nav
+      function onScroll() {
+        if (window.scrollY > 12) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      // Hamburger toggle
+      function closeMobileNav() {
+        hamburger.classList.remove('open');
+        mobileNav.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+
+      hamburger.addEventListener('click', function () {
+        var isOpen = mobileNav.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      // Close mobile nav on link click
+      mobileLinks.forEach(function (link) {
+        link.addEventListener('click', closeMobileNav);
+      });
+
+      // Close on outside click
+      document.addEventListener('click', function (e) {
+        if (!nav.contains(e.target) && !mobileNav.contains(e.target)) {
+          closeMobileNav();
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
